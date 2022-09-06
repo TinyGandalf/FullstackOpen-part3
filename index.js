@@ -28,11 +28,23 @@ app.get('/api/persons', (request, response) => {
   response.send(persons)
 })
 
+app.get('/api/persons/:id', (request, response) => {
+  const id = request.params.id
+  const person = persons.find(person => person.id == id)
+
+  if (!person) {
+    return response.status(404).json({
+      error: `No entries for person with id: '${id}'`
+    })
+  }
+
+  response.send(person)
+})
+
 app.get('/info', (request, response) => {
   response.send(`<p>Phonebook has info for ${persons.length} people</p>
                  <p>${Date()}</p>`)
 })
-
 
 const PORT = 3001
 app.listen(PORT, () => {
