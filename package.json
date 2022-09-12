@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "npx nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../FullstackOpen-part2/phonebook && npm run build && mv build ../../FullstackOpen-part3"
   },
   "author": "Giuliano Rosso",
   "license": "MIT",
