@@ -42,12 +42,9 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 app.post('/api/persons', (request, response, next) => {
-  const body = request.body
+  const { name, number } = request.body
 
-  const person = new Person({
-    name: body.name,
-    number: body.number
-  })
+  const person = new Person({ name, number })
 
   person.save()
     .then(() => {
@@ -91,6 +88,8 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).json({ error: 'invalid ID' })
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
+  } else if (error.name === 'MongoServerError' && error.code === 11000) {
+    return response.status(409).json({ error: 'a person with that name already exists' })
   }
 
   next(error)
