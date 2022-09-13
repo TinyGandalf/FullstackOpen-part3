@@ -45,34 +45,28 @@ app.get('/api/persons', (request, response) => {
 //   response.status(204).end()
 // })
 
-// app.post('/api/persons', (request, response) => {
-//   const id = generateId()
-//   const body = request.body
+app.post('/api/persons', (request, response) => {
+  const body = request.body
 
-//   if (!body.name) {
-//     return response.status(400).json({
-//       error: "name missing"
-//     })
-//   } else if (!body.number) {
-//     return response.status(400).json({
-//       error: "number missing"
-//     })
-//   } else if (persons.find(person => person.name === body.name)) {
-//     return response.status(409).json({
-//       error: `Person with name '${body.name}' already exists`
-//     })
-//   }
+  if (!body.name) {
+    return response.status(400).json({
+      error: "name missing"
+    })
+  } else if (!body.number) {
+    return response.status(400).json({
+      error: "number missing"
+    })
+  }
 
-//   const person = {
-//     id: id,
-//     name: body.name,
-//     number: body.number
-//   }
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
 
-//   persons = persons.concat(person)
-
-//   response.status(201).json(person)
-// })
+  person.save().then(() => {
+    response.status(201).json(person)
+  })
+})
 
 // app.get('/info', (request, response) => {
 //   response.send(`<p>Phonebook has info for ${persons.length} people</p>
