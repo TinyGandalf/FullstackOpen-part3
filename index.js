@@ -25,18 +25,13 @@ app.get('/api/persons', (request, response) => {
   Person.find({}).then((persons) => response.send(persons))
 })
 
-// app.get('/api/persons/:id', (request, response) => {
-//   const id = request.params.id
-//   const person = persons.find(person => person.id == id)
-
-//   if (!person) {
-//     return response.status(404).json({
-//       error: `No entries for person with id: '${id}'`
-//     })
-//   }
-
-//   response.send(person)
-// })
+app.get('/api/persons/:id', (request, response, next) => {
+  Person.findById(request.params.id)
+    .then(person => {
+      response.send(person)
+    })
+    .catch(error => next(error))
+})
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
@@ -84,10 +79,13 @@ app.put('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-// app.get('/info', (request, response) => {
-//   response.send(`<p>Phonebook has info for ${persons.length} people</p>
-//                  <p>${Date()}</p>`)
-// })
+app.get('/info', (request, response) => {
+  Person.count()
+    .then(count => {
+      response.send(`<p>Phonebook has info for ${count} people</p>
+                     <p>${Date()}</p>`)
+    })
+})
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
