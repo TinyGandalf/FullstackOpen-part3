@@ -38,12 +38,16 @@ app.get('/api/persons', (request, response) => {
 //   response.send(person)
 // })
 
-// app.delete('/api/persons/:id', (request, response) => {
-//   const id = request.params.id
-//   persons = persons.filter(person => person.id != id)
-
-//   response.status(204).end()
-// })
+app.delete('/api/persons/:id', (request, response) => {
+  Person.findByIdAndDelete(request.params.id)
+    .then(() => {
+      response.status(204).end()
+    })
+    .catch(error => {
+      console.error(error)
+      response.status(400).json({ error })
+    })
+})
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
