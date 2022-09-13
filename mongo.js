@@ -48,6 +48,5 @@ mongoose
     mongoose.connection.close()
   })
   .catch((err) => {
-    console.log(`Error: `, err)
+    console.log('Error: ', err)
   })
-  

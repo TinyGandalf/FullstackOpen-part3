@@ -7,11 +7,13 @@
     "start": "node index.js",
     "dev": "npx nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
     "build:ui": "rm -rf build && cd ../FullstackOpen-part2/phonebook && npm run build && mv build ../../FullstackOpen-part3"
   },
   "author": "Giuliano Rosso",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^8.23.1",
     "nodemon": "^2.0.19"
   },
   "dependencies": {

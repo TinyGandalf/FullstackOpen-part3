@@ -65,7 +65,7 @@ app.put('/api/persons/:id', (request, response, next) => {
       if (updatedPerson)
         response.send(updatedPerson)
       else
-        response.status(404).json({ error: `No person found with ID '${request.params.id}'`})
+        response.status(404).json({ error: `No person found with ID '${request.params.id}'` })
     })
     .catch(error => next(error))
 })
